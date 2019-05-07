@@ -1,12 +1,46 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Linky{% endblock %}</title>
+
+    <!-- Turbolinks -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/turbolinks/5.2.0/turbolinks.js"></script>
+    <!-- Sementic-UI -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.css"/>
+    <!-- App -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+    <div class="ui container mb-3">
+        <div class="ui secondary menu">
+            <div class="right menu">
+                <div class="item">
+                    <div class="ui search focus">
+                        <div class="ui left icon input">
+                            <input class="prompt" id="search" type="text" placeholder="Recherche..." autocomplete="off">
+                            <i class="search icon"></i>
+                        </div>
+                    </div>
+
+                    <div class="ui ml-1 focus">
+                        <a href="#" class="ui button">Déconnexion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- Sementic-UI -->
+    <script src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+    <!-- clipboard.js -->
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+</body>
 </html>

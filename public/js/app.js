@@ -1,0 +1,1 @@
+$('.links_date').datepicker();

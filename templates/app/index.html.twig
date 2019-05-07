@@ -1,0 +1,55 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1 class="ui header">Linky <small><i class="linkify icon"></i></small></h1>
+
+    {% for message in app.flashes("link_added") %}
+        <div class="ui positive message">
+            <i class="close icon"></i>
+            <div class="header">
+                Super <i class="smile outline icon"></i>
+            </div>
+            <p>{{ message }}</p>
+        </div>
+    {% endfor %}
+
+    {{ form_start(form, {'attr': {'class': 'ui form'}}) }}
+        <div class="three fields">
+            <div class="field">
+                {{ form_widget(form.link) }}
+            </div>
+            <div class="field">
+                {{ form_widget(form.tags) }}
+            </div>
+        </div>
+
+        <button type="submit" class="ui gray button">Enregistrer</button>
+    {{ form_end(form) }}
+
+    {% if linkList|length > 0 %}
+        <div class="links">
+            <div class="ui divider"></div>
+            <div class="ui middle aligned divided list">
+                {% for link in linkList|reverse %}
+                    <div class="item">
+                        <div class="right floated content">
+                            <a class="ui icon gray button btn" data-clipboard-target="#link{{ loop.index }}"><i class="copy outline icon"></i></a>
+                            <a href="#" class="ui icon red button btn" data-turbolinks="false"><i class="trash alternate icon"></i></a>
+                        </div>
+                        <img class="ui avatar image" src="https://besticon-demo.herokuapp.com/icon?url={{ link.link }}&size=180" alt="Link icon">
+                        <div class="content link-line">
+                            <a href="{{ link.link }}" target="_blank" id="link{{ loop.index }}">{{ link.link }}</a> -
+                            <b>{{ link.date|date('d-m-Y') }}</b>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="ui buttons">
+            <a href="#" class="ui button">Exporter mes liens</a>
+            <div class="or" data-text="ou"></div>
+            <a href="#" class="ui button">Partager mes liens</a>
+        </div>
+    {% endif %}
+{% endblock %}
