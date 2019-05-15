@@ -8,11 +8,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Link;
 use App\Form\LinksType;
-
+/**
+ * @Route("/app")
+ */
 class AppController extends AbstractController
 {
     /**
-     * @Route("/app", name="app")
+     * @Route("/", name="app_index")
      */
     public function index(Request $request)
     {
@@ -35,11 +37,32 @@ class AppController extends AbstractController
             $em->flush();
 
             $this->addFlash("linkAdded", "Votre lien a bien été ajouté !");
-            return $this->redirectToRoute("app");
+            return $this->redirectToRoute("app_index");
         }
+
         return $this->render("app/index.html.twig", [
             "form" => $form->createView(),
             "linkList" => $linkList
         ]);
+    }
+
+    /**
+     * @Route("/link/delete/{id}", name="app_delete_link")
+     */
+    public function deleteLink(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $link = $em
+            ->getRepository(Link::class)
+            ->find($id);
+
+        try {
+            $em->remove($link);
+            $em->flush();
+        } catch (\Throwable $th) {
+            return new Response("Une erreur est survenue lors de la suppression.");
+        }
+        return $this->redirectToRoute("app_index");
     }
 }

@@ -1,0 +1,19 @@
+{% if not form.vars.valid %}
+    <div class="ui error message">
+        <i class="close icon"></i>
+        <div class="header">
+            Erreur <i class="smile outline icon"></i>
+        </div>
+        <p>{{ form_errors(form.link) }}<p>
+    </div>
+{% endif %}
+    
+{% for message in app.flashes("link_added") %}
+    <div class="ui positive message">
+        <i class="close icon"></i>
+        <div class="header">
+            Super <i class="smile outline icon"></i>
+        </div>
+        <p>{{ message }}</p>
+    </div>
+{% endfor %}

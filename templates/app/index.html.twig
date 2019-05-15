@@ -3,15 +3,7 @@
 {% block body %}
     <h1 class="ui header">Linky <small><i class="linkify icon"></i></small></h1>
 
-    {% for message in app.flashes("link_added") %}
-        <div class="ui positive message">
-            <i class="close icon"></i>
-            <div class="header">
-                Super <i class="smile outline icon"></i>
-            </div>
-            <p>{{ message }}</p>
-        </div>
-    {% endfor %}
+    {% include 'app/_inc/messages.html.twig' %}
 
     {{ form_start(form, {'attr': {'class': 'ui form'}}) }}
         <div class="three fields">
@@ -22,7 +14,6 @@
                 {{ form_widget(form.tags) }}
             </div>
         </div>
-
         <button type="submit" class="ui gray button">Enregistrer</button>
     {{ form_end(form) }}
 
@@ -33,13 +24,13 @@
                 {% for link in linkList|reverse %}
                     <div class="item">
                         <div class="right floated content">
-                            <a class="ui icon gray button btn" data-clipboard-target="#link{{ loop.index }}"><i class="copy outline icon"></i></a>
-                            <a href="#" class="ui icon red button btn" data-turbolinks="false"><i class="trash alternate icon"></i></a>
+                            <a  class="ui icon gray button btn"><i data-clipboard-target="#link{{ loop.index }}" class="copy outline icon"></i></a>
+                            <a href="{{ path("app_delete_link", {"id":link.id}) }}" class="ui icon red button btn" data-turbolinks="false"><i class="trash alternate icon"></i></a>
                         </div>
                         <img class="ui avatar image" src="https://besticon-demo.herokuapp.com/icon?url={{ link.link }}&size=180" alt="Link icon">
                         <div class="content link-line">
                             <a href="{{ link.link }}" target="_blank" id="link{{ loop.index }}">{{ link.link }}</a> -
-                            <b>{{ link.date|date('d-m-Y') }}</b>
+                            <b>{{ link.date|date("d-m-Y H:i")|ago }}</b>
                         </div>
                     </div>
                 {% endfor %}
